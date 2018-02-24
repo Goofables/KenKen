@@ -1,7 +1,7 @@
 package com.gmail.goofables.KenKen;
 
 /*
- * Created on 2/15/18 at 10:19 PM by ***REMOVED***
+ * Created on 2/15/18 at 10:19 PM by Gaelin Shupe
  *
  * Created in KenKen (com.gmail.goofables.KenKen)
  *
@@ -58,6 +58,7 @@ class loop extends AnimationTimer {
     private List<QueueItem> queue = new ArrayList<>();
     private KenKen game;
     
+    
     loop(Canvas canvas) {
         super();
         this.canvas = canvas;
@@ -66,6 +67,8 @@ class loop extends AnimationTimer {
         HEIGHT = canvas.getHeight();
         W_INC = (WIDTH - 2 * border) / size;
         H_INC = (HEIGHT - 2 * border) / size;
+        
+        this.game = new KenKen(size);
         
         setup();
     }
@@ -78,8 +81,13 @@ class loop extends AnimationTimer {
         if (queue.size() > 0) {
             QueueItem item = queue.remove(0);
             gc.setStroke(item.color);
-            gc.setLineWidth(item.weight);
-            gc.strokeLine(item.x1, item.y1, item.x2, item.y2);
+            if (item.weight > 0) {
+                gc.setLineWidth(item.weight);
+                gc.strokeLine(item.x1, item.y1, item.x2, item.y2);
+            } else {
+                gc.setLineWidth(1);
+                gc.strokeText(item.text, item.x1, item.y1);
+            }
             return;
         }
         
@@ -105,6 +113,11 @@ class loop extends AnimationTimer {
             queue.add(new QueueItem(border, y * H_INC + border, HEIGHT - border, y * H_INC + border, Color.BLACK, 1));
         for (int x = 1; x < size; x++)
             queue.add(new QueueItem(x * W_INC + border, border, x * W_INC + border, WIDTH - border, Color.BLACK, 1));
+        for (int i1 = 0; i1 < size; i1++)
+            for (int i2 = 0; i2 < size; i2++)
+                queue.add(new QueueItem(i1 * W_INC + W_INC / 2 + border, i2 * H_INC + H_INC / 2 + border, String.valueOf(game.board[i1][i2]), Color.BLACK));
+        
+        
     }
 }
 
@@ -115,6 +128,7 @@ class QueueItem {
     double y2;
     Color color;
     int weight;
+    String text;
     
     QueueItem(double x1, double y1, double x2, double y2, Color color, int weight) {
         this.x1 = x1;
@@ -123,5 +137,13 @@ class QueueItem {
         this.y2 = y2;
         this.color = color;
         this.weight = weight;
+    }
+    
+    QueueItem(double x, double y, String text, Color color) {
+        this.x1 = x;
+        this.y1 = y;
+        this.text = text;
+        this.color = color;
+        this.weight = -1;
     }
 }

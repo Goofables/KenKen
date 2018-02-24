@@ -1,6 +1,6 @@
 package com.gmail.goofables.KenKen;
 /*
- * Created on 2/15/18 at 10:19 PM by ***REMOVED***
+ * Created on 2/15/18 at 10:19 PM by Gaelin Shupe
  * 
  * Created in KenKen (com.gmail.goofables.KenKen)
  * 
@@ -8,8 +8,8 @@ package com.gmail.goofables.KenKen;
 
 class KenKen {
     
+    int[][] board;
     private int size;
-    private int[][] board;
     
     KenKen(int size) {
         assert size > 0;
