@@ -14,12 +14,11 @@ class KenKen {
     KenKen(int size) {
         assert size > 0;
         this.size = size;
-        generate();
+        fill();
         randomize();
-        print();
     }
     
-    void generate() {
+    void fill() {
         board = new int[size][size];
         for (int c = 0; c < size; c++) {
             for (int r = 0; r < size; r++) {
@@ -59,18 +58,6 @@ class KenKen {
                 }
             }
         }*/
-    }
-    
-    private void fill() {
-        for (int r = 0; r < size; r++) {
-            for (int c = 0; c < size; c++) {
-                board[r][c] = r + c;
-                while (board[r][c] > size) {
-                    board[r][c] -= size;
-                }
-                if (board[r][c] == 0) board[r][c] += size;
-            }
-        }
     }
     
     private boolean valid(int row, int col) {
